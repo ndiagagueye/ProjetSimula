@@ -1,0 +1,273 @@
+{% extends "sim/accueil.html" %}
+
+{% block titre %}
+<title>Telechargement</title>
+
+{% endblock %}
+
+
+{% block page %}
+{% load static %}
+
+<style type="text/css">
+  body
+  {
+    background-color:#f0efe7;
+  }
+  p ,a, span 
+  {
+    color: #000000;
+  }
+  .row
+  {
+    margin-bottom: 50px;
+  }
+  #tableau
+  {
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+
+  #tableau, tr, td ,hr{
+    border: 1px solid darkcyan;
+  }
+  hr{
+    margin-top: 30px;
+    margin-bottom: 40px;
+
+  }
+  .table , hr{
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    text-align: center;
+    background-color: transparent;
+    color: #006080;
+}
+th {
+    text-align: center;
+    color:  #03252b;
+}
+
+
+</style>
+<div class="container" style="">
+<div class="row" style="text-align:left; margin-top: 100px;">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <span class="card-title" style="font-size: 3.8em; font-style:Elephant; ">
+          <span style="color: #25BAD0;">SimulaMath</span>
+            <p class="card-text" style="font-size: 0.5em; margin: 1%; font-style:Elephant; ">{{ infosVersion.version_view}} pour {{ infosVersion.syste}}</p>   
+         </span>
+        <p class="card-text" style="font-size: 1.6em; margin: 1%; font-style:Elephant; "> Build responsive, mobile-first projects on the web with the world's most popular front-end component library.<br><br>
+        Bootstrap is an open source toolkit for developing with HTML, CSS, and JS. Quickly prototype your ideas or build your entire app with our Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful plugins built on jQuery. </p><br><br>
+
+
+
+
+        {% if lastLogiciel.logiciel64 %}
+        <a href="{{MEDIA_URL}}{{lastLogiciel.logiciel64.logiciel.url }}" download="simula_{{lastLogiciel.logiciel64.version.versionDownload}}_{{infosVersion.syste}}_64bits.{{lastLogiciel.logiciel64.extension}}"
+          class="btn btn-primary fa fa-download"
+           style="font-size: 1.6em; margin: 1%; background: #03252b;"> 64bits</a> 
+           {% endif %}
+
+        {% if lastLogiciel.logiciel32 %}
+        <a href="{{MEDIA_URL}}{{lastLogiciel.logiciel32.logiciel.url }}" download="simula_{{lastLogiciel.logiciel32.version.versionDownload}}_{{infosVersion.syste}}_32bits.{{lastLogiciel.logiciel32.extension}}" 
+           style="font-size: 1.6em; margin: 1%; background: #03252b;"class="fa fa-download btn btn-primary"> 32bits</a>
+           {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body" >
+      	<img style="width: 70%; float: right;" src="{% static "image/sim_icon5.ico" %}"> 
+      </div>
+    </div>
+  </div>
+
+</div>
+ 
+ <hr ><br>
+
+ <h3 style="text-align: left; width: 100%;">Liste de toutes les versions disponibles </h3>
+
+
+ <span style="width: 100%; text-align: left; display: block;">Les logiciels sont listé par date de parution et pour chaque version vous avez les architechtures 32bits et 64bits disponibles</span>
+
+<!-- Version disponibles -->
+<br>
+<link rel="stylesheet" href="{% static "css/AdminLTE.min.css" %}">
+
+
+
+
+
+            <ul class="nav nav-tabs " style="background-color: #f0efe7!important">
+              <li class="active"><a href="#activity" data-toggle="tab">Windows</a></li>
+              <li><a href="#timeline" data-toggle="tab">Linux</a></li>
+              <li><a href="#settings" data-toggle="tab">Mac OS</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="active tab-pane" id="activity">
+              <h4>Logiciels Simula pour Windows </h4>
+                <div class="post">
+                   <table id="tableau" class="table table-striped">
+
+
+             <thead>
+              <!-- Listes des etudiants -->
+               <tr>
+                 <th>Version disponible</th>
+                 <th>Date de publication</th>
+                 <th>Version</th>
+                 <th>Details</th>
+               </tr>
+
+             </thead>
+             <tbody id="tbody">
+
+
+
+
+
+                {% for logiciel64 in logiciels64w %}
+                 <tr>
+                   <td>simula {{logiciel64.version}}</td>
+                   <td>{{logiciel64.date}}</td>
+                   <td>
+
+                      <a style="margin-right: : 15px;" class="fa fa-download" href="{{MEDIA_URL}}{{logiciel64.logiciel.url }}" 
+                      download="simula_{{logiciel64.version.versionDownload}}_Windows_64bits.{{logiciel64.extension}}">
+                       64bits</a>
+
+                      <a style="margin-left: 15px;" class="fa fa-download" 
+                      {% for logiciel32 in logiciels32w %}
+                       {% if logiciel64w.version.id == logiciel32.version.id %}  href="{{MEDIA_URL}}{{logiciel32.logiciel.url }}" 
+                        download="simula_{{logiciel32.version.versionDownload}}_Windows_32bits.{{logiciel3.extension}}"
+                       {% endif %}
+                       {% endfor %} >32bits</a>
+                    </td>
+                   <td>Detail sur {{logiciel64w.version.nom}}</td>
+                  </tr>
+                  {%endfor%}                
+             </tbody>
+           </table>
+                  
+                </div>
+                <!-- /.post -->
+              </div>
+
+              <div class="tab-pane" id="timeline">
+                  <h4>Logiciels Simula pour Lunix</h4> 
+
+                <div class="timeline timeline-inverse">
+                      
+                     <table id="tableau" class="table table-striped">
+
+
+                       <thead>
+                       
+                           <tr>
+                             <th>Version disponible</th>
+                             <th>Date de publication</th>
+                             <th>Version</th>
+                             <th>Details</th>
+                           </tr>
+
+                       </thead>
+                       <tbody id="tbody">
+
+                              {% for logiciel64 in logiciels64l %}
+                               <tr>
+                                 <td>simula {{logiciel64.version}}</td>
+                                 <td>{{logiciel64.date}}</td>
+                                 <td>
+
+                                    <a style="margin-right: : 15px;" class="fa fa-download" href="{{MEDIA_URL}}{{logiciel64.logiciel.url }}" 
+                                    download="simula_{{logiciel64.version.versionDownload}}_Lunix_64bits.{{logiciel64.extension}}">
+                                     64bits</a>
+
+                                    <a style="margin-left: 15px;" class="fa fa-download" 
+                                    {% for logiciel32 in logiciels32l %}
+                                     {% if logiciel64.version.id == logiciel32.version.id %}  href="{{MEDIA_URL}}{{logiciel32.logiciel.url }}" 
+                                      download="simula_{{logiciel32.version.versionDownload}}_Lunix_32bits.{{logiciel32.extension}}"
+                                     {% endif %}
+                                     {% endfor %} >32bits</a>
+                                  </td>
+                                 <td>Detail sur {{logiciel64.version.nom}}</td>
+                                </tr>
+                                {%endfor%}    
+                       </tbody>
+                    </table>
+
+                </div>
+              </div>
+
+              <div class="tab-pane" id="settings">
+                <h4>Logiciels Sumila pour Mac OS </h4>
+                <div class="form-horizontal">
+                  
+                  <table id="tableau" class="table table-striped">
+
+
+             <thead>
+              <!-- Listes des etudiants -->
+               <tr>
+                 <th>Version disponible</th>
+                 <th>Date de publication</th>
+                 <th>Version</th>
+                 <th>Details</th>
+               </tr>
+
+             </thead>
+             <tbody id="tbody">
+
+
+
+
+
+                {% for logiciel64 in logiciels64m %}
+                 <tr>
+                   <td>simula {{logiciel64.version}}</td>
+                   <td>{{logiciel64.date}}</td>
+                   <td>
+
+                      <a style="margin-right: : 15px;" class="fa fa-download" href="{{MEDIA_URL}}{{logiciel64.logiciel.url }}" 
+                      download="simula_{{logiciel64.version.versionDownload}}_{{element_liste.syste}}_64bits.{{element_liste.extension64}}">
+                       64bits</a>
+
+                      <a style="margin-left: 15px;" class="fa fa-download" 
+                      {% for logiciel32 in logiciels32m %}
+                       {% if logiciel64.version.id == logiciel32.version.id %}  href="{{MEDIA_URL}}{{logiciel32.logiciel.url }}" 
+                        download="simula_{{logiciel32.version.versionDownload}}_{{element_liste.syste}}_32bits.{{element_liste.extension32}}"
+                       {% endif %}
+                       {% endfor %} >32bits</a>
+                    </td>
+                   <td>Detail sur {{logiciel.version.nom}}</td>
+                  </tr>
+                  {%endfor%} 
+             </tbody>
+           </table>
+              </div>
+            </div>
+          
+
+
+
+
+
+
+</div>
+</div>
+</div>
+ <script type="text/javascript">
+    $(document).ready(function() {
+          
+      $(function(){
+          $("#tableau").dataTable();
+      });
+ </script>     
+
+{% endblock %}

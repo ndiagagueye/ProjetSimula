@@ -1,0 +1,24 @@
+
+
+
+h1{
+	/*font-family: 'Courgette', cursive;*/
+	color:#0a4b55;
+	text-align:center;
+}
+.text_first{
+	/*font-family: 'Courgette', cursive;*/
+	margin-top:30px;
+	font-size:20px;
+	text-align:center;
+}
+.hs{
+	text-align:center;
+}
+.text_second{
+	/*font-family: 'Lobster';*/
+	margin-top:30px;
+	font-size:20px;
+	text-align:center;
+}
+

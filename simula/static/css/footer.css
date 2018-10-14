@@ -1,0 +1,55 @@
+footer 
+{
+  margin-top:100px;
+  background-color: #2180A7;;
+  color: white;
+}
+footer p, footer ul
+{
+    font-size: 1em;
+}
+
+footer h1
+{
+    font-size: 1.2em;
+}
+footer img
+{
+  height: 40px;
+  width: 50px;
+}
+#mes_photos img
+{
+
+    margin-right: 5px;
+}
+
+#listes_amis
+{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0;
+}
+
+#mes_amis ul
+{
+    
+    padding-left: 2px;
+}
+
+#mes_amis a
+{
+    text-decoration: none;
+    color: #760001;
+}
+
+#list_contact
+{
+    display: flex;
+    float: right; 
+
+}
+#boutique 
+{
+  text-align: center;
+}

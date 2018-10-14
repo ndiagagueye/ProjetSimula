@@ -1,0 +1,65 @@
+{% extends "sim/galerie.html" %}
+
+{% block titre %}
+<title>Documentation de SimulaMath</title>
+
+{% endblock %}
+
+
+{% block page %}
+
+{% load static %}
+
+
+<!-- Contact Section -->
+<div id="contact" class="text-center">
+  <div class="overlay">
+    <div class="container">
+      <div class="col-md-8 col-md-offset-2 section-title">
+        <h2>SimulaMath {{name}}</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor apibus lornare diam commodo nibh.</p>
+      </div>
+      <div class="col-md-8 col-md-offset-2">
+        <form name="sentMessage" id="contactForm" novalidate method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" id="name" class="form-control" name="name" placeholder="Name" required="required">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required="required">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
+            <p class="help-block text-danger"></p>
+          </div>
+          <div id="success"></div>
+          <button type="submit" class="btn btn " style="background-color: #25BAD0; ">Laisser un message</button>
+        </form>
+        <div class="social">
+          <ul>
+            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa fa-github"></i></a></li>
+            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% if send %}
+  <script type="text/javascript"> 
+    alert('Message envoyé avec success')
+  </script>>
+{% endif%}
+
+{% endblock%}
