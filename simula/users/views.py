@@ -3,10 +3,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as dj_login
+from django.contrib.auth import login as auth_login
 from django.db.models import Q
 from .models import *
 from .forms import *
-
 
 
 def login(request):
@@ -17,17 +17,16 @@ def login(request):
         password = form.cleaned_data['password']
         user = authenticate(username=email, password=password)
         if user is not None:
-            dj_login(request, user)  
-            error=False
+            dj_login(request, user)
+            error = False
             if request.GET.get('next', False):
                 return redirect(request.GET['next'])
             else:
                 return redirect("/")
         else:
-           error = True
+            error = True
     return render(request, 'users/login.html', locals())
 
-  
 
 def register(request):
     form = RegisterForm(request.POST or None)
@@ -47,19 +46,24 @@ def register(request):
                 if user.username == email:
                     username_error = True
             if not username_error:
-                new_user = User.objects.create_user(email, email, password)
+                new_user = User.objects.create_user(email,  email, password)
+                new_user.name = name
                 user = Users()
-                user.user = new_user 
+                user.user = new_user
                 user.name = name
                 user.save()
-                login(request, new_user)                
+
+                new_user = authenticate(email=user.username, password=password)
+
+                dj_login(request, new_user)
     return render(request, 'users/register.html', locals())
-	
+
+
 def profile(request):
     error = False
     if request.method == ["POST"]:
         profession = request.POST['select-profession']
-        #if profession == "" :
+        # if profession == "" :
 
         if profession == "Professeur" or profession == "Eleve" or profession == "Etudiant" or profession == "Docteur" or profession == "Enseignant chercher":
 
@@ -70,12 +74,10 @@ def profile(request):
         else:
 
             error = True
-            
-        
+
+
     else:
 
         error = False
-        
-                  
+
     return render(request, 'users/profile.html', locals())
-    

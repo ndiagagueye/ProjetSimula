@@ -1,15 +1,50 @@
 $(function() {
-
-
-    // Submit post on submit
     $('#comment-form').on('submit', function(event){
         event.preventDefault();
         console.log("form submitted!")  // sanity check
-        create_post();
+        add_comment();
     });
 
+    function changePostUpdate() {
+        console.log("Change Post Update")
+        $.ajax({
+            url : "/forum/change_post_update",
+            type : "POST",
+            data : { id: $('#post_id').val() },
+            success : function(json) {
+                console.log(json);
+            }
+        });
+
+
+    }
+
+    setInterval(function () {
+        $.ajax({
+            url : "/forum/update_post",
+            type : "POST",
+            data : { id: $('#post_id').val() },
+            success : function(json) {
+                if(json.update == true) {
+                    setTimeout(changePostUpdate,900);
+
+                    $("#new-comment").append(
+                    "<li><div class='comment-avatar'><img src='http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg' alt=''></div><div class='comment-box'>"
+                                    + "<div class='comment-head content-comm'><h6 class='comment-name by-author'><a href=''>"+json.comment_username+"</a></h6>"
+                                      +"<span>hace 10 minutos</span><i class='fa fa-check' style='font-size: 2em; color: #00a65a'></i></div><div class='comment-content content-comm'>"
+                                      +json.comment_body+
+                                   " </div></div></li>")
+
+                }
+            }
+        });
+
+    }, 1000);
+
+
+
     // AJAX for posting
-    function create_post() {
+    function add_comment() {
         console.log("create post is working!") // sanity check
         $.ajax({
             url : "/forum/add_comment", // the endpoint
@@ -17,17 +52,8 @@ $(function() {
             data : { body : $('#comment-text').val(), post_id: $('#post_id').val()}, // data sent with the post request
             // handle a successful response
             success : function(json) {
-                $('#comment-text').val(''); // remove the value from the input
-                console.log(json); // log the returned json to the console
-                $("#new-comment").append(
-                    "<li><div class='comment-avatar'><img src='http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg' alt=''></div><div class='comment-box'>"
-                                    + "<div class='comment-head content-comm'><h6 class='comment-name by-author'><a href=''>"+json.user+"</a></h6>"
-                                      +"<span>hace 10 minutos</span><i class='fa fa-heart'></i></div><div class='comment-content content-comm'>"
-                                      +json.body+
-                                   " </div></div></li>")
-                console.log("success"); // another sanity check
+                $('#comment-text').val('');
             },
-            // handle a non-successful response
             error : function(xhr,errmsg,err) {
                 $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
                     " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom

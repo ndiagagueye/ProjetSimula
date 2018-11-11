@@ -19,6 +19,7 @@ class Post(models.Model):
     publish = models.BooleanField(default=False)
     closed = models.BooleanField(default=False)
     image = models.ImageField(upload_to="photos/", null=True, blank=True)
+    update = models.BooleanField(default=False)
 
     def __str__(self):
         return self.body[:30]

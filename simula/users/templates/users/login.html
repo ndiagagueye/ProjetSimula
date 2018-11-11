@@ -35,7 +35,7 @@
 
             <h1>Connectez-vous</h1>
             <div style="width:100%">
-                <form action="{% url "login" %}" method="post">
+                <form action="{% url "users:login" %}" method="post">
                     {% csrf_token %}
                     {% if error %}
                     <div class="form-group has-errors text-danger small">

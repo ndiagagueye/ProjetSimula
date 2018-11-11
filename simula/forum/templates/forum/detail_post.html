@@ -344,7 +344,12 @@ i#icon-search{
     margin-left: 15%!important;
 }
 
-
+.hide{
+    display: none;
+}
+.show {
+    display: block;
+}
 
    
 </style>
@@ -422,50 +427,53 @@ i#icon-search{
 			
 			</div>
 
-			<div class="comments-container menu" id="menuleft">
+
+
+            <div class="comments-container menu" id="menuleft">
 
 				<ul>
 					<li>
 						<div class="comment-main-level">
 							<div class="comment-box">
 								<div class="comment-head category">
-									<h6 class="comment-name name " >Menu</h6>
-									
-									
+									<h2 class="title-widget-sidebar">Menu</h2>
 								</div>
-
 								<div class="comment-content"  >
-
-									<div class="">
-										{% if user.is_authentificated %}
-										  <a style="color: #fff" href="">
+						             <div class="widget-sidebar">
+										{% if not user.is_authentificated %}
+                                            <a style="color: #fff" href="{% url 'users:login' %}">
 							                 <button class="categories-btn">
 							                 	Se connecter
 							                 </button>
                                             </a>
+							            {% endif %}
 
-									     {% endif %}
+                                     {% if  user.is_authentificated %}
+                                            <a style="color: #fff" href="{% url 'forum:create_post' %}">
+							                 <button class="categories-btn">
+							                 	Poser une question
+							                 </button>
+                                            </a>
+							            {% endif %}
 
-									    {% if not user.is_authetificated %} 
-											<button class="categories-btn menu">
-												<a class="href" href="{% url 'forum:create_post' %}">Se connecter</a>
-											</button>
-									    {% endif %}
+                                     {% if user.is_authentificated %}
+                                            <a style="color: #fff" href="{% url 'users:logout' %}">
+							                 <button class="categories-btn">
+							                 	Se déconnecter
+							                 </button>
+                                            </a>
+							            {% endif %}
 
-									    {% if not user.is_authentificated  %}
-											<button class="categories-btn menu">
-												<a class="href" href="{% url 'forum:create_post' %}">Pas encore membre</a>
-											</button>
-										{% endif %}	
+                                     {% if not user.is_authentificated %}
+                                            <a style="color: #fff" href="{% url 'users:register' %}">
+							                 <button class="categories-btn">
+                                                 Créer un compte
+							                 </button>
+                                            </a>
+							            {% endif %}
 
-										{% if not user.is_authentifcated %}
-                                            <button class="categories-btn menu">
-												<a class="href" href="{% url 'forum:create_post' %}">Se déconnecter</a>
-											</button>											
-									    {% endif %}
-									</div>
-			
-        
+						             </div>
+
 								</div>
 							</div>
 						</div>
@@ -473,8 +481,9 @@ i#icon-search{
 					</li>
 
 				</ul>
-			
+
 			</div>
+
 
 	    </div>
 
@@ -574,10 +583,14 @@ i#icon-search{
 											il y'a {{ nowtime.second|sub:post.date.second}} secondes
 										{% endif%}
 									    </span>
-
-										<i class="fa fa-check" style="font-size: 2em; color: #00a65a"></i>
-                                    	<i  style="font-size: 2em;">3 notes</i>
-
+                                        {% if comment.validate == False %}
+                                        <i  id="valide-{{ comment.id }}" class='hide fa fa-check' style='font-size: 2em; color: #00a65a;'></i>
+                                                {% if is_superuser == True %}
+                                                    <button  id="button-validate-{{ comment.id }}"  class="show btn btn pull-right" style="font-size: 1.2em; color: #0d6aad">valider</button>
+                                            {% endif %}
+                                        {% else %}
+                                             <i class='fa fa-check' style='font-size: 2em; color: #00a65a;'></i>
+                                        {% endif %}
 									</div>
 									<div class="comment-content content-comm">
 
@@ -587,6 +600,30 @@ i#icon-search{
 								</div>
 
 							</li>
+                            <script>
+                            $('#button-validate-{{ comment.id }}').on('click', function(event){
+                                event.preventDefault();
+                                comment_id = {{ comment.id }};
+                                validate_comment(comment_id);
+                                console.log("Button clicker ");
+                                console.log({{ comment.id }});
+                                $('#valide-{{ comment.id }}').addClass("show");
+                                $('#valide-{{ comment.id }}').removeClass("hide");
+                                $('#button-validate-{{ comment.id }}').removeClass("show");
+                                $('#button-validate-{{ comment.id }}').addClass("hide");
+                            });
+                            function validate_comment(id_comment) {
+
+                                 $.ajax({
+                                    url : "/forum/validate_comment",
+                                    type : "POST",
+                                    data : { comment_id: id_comment },
+                                    success : function(json) {
+                                    }
+                                });
+
+                            }
+                            </script>
 							{% endfor %}
 						</ul>
 					</li>
@@ -631,6 +668,9 @@ i#icon-search{
         }
    });
 });
+
+
+
 	</script>
 	    <script type="text/javascript" src="{% static "js/add_comment.js" %}" ></script>
 {% endblock%}

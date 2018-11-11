@@ -34,7 +34,7 @@
             </span>
             <h1>Inscrivez-vous</h1>
             <div style="width:100%">
-                <form action="{% url "register" %}"  method="post">
+                <form action="{% url "users:register" %}"  method="post">
                     {% csrf_token %}
                     {% if username_error %}
                     <div class="form-group has-errors text-danger small">

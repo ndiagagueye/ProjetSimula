@@ -34,7 +34,6 @@ def home(request):
     comments = Comment.objects.all().order_by('date')
     form = CommentForm(request.POST)
 
-
     return render(request, "forum/home.html", locals())
 
 
@@ -45,6 +44,9 @@ def detail_post(request, pk):
     nowtime = datetime.now()
     comments = Comment.objects.filter(post__id=pk).order_by('date')
     form = CommentForm(request.POST)
+    is_superuser = False
+    if request.user.is_superuser:
+        is_superuser = True
 
     return render(request, "forum/detail_post.html", locals())
 
@@ -68,12 +70,13 @@ def add_comment(request):
         date = datetime.now()
         comment = Comment(body=comment_text, user=request.user, post=post)
         comment.save()
-
+        post.update = True
+        post.save()
         response_data['result'] = 'Create post successful!'
         response_data['commentid'] = comment.id
         response_data['body'] = comment.body
         response_data['user'] = comment.user.username
-        response_data['id'] = comment.post.id
+        response_data['post_id'] = comment.post.id
 
         return HttpResponse(
             json.dumps(response_data),
@@ -84,3 +87,38 @@ def add_comment(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
+
+def update_post(request):
+    post_id = request.POST['id']
+    post = Post.objects.get(id=post_id)
+    response_data = {'update': post.update}
+    if post.update:
+        comment = Comment.objects.filter(post__id=post_id).last()
+        response_data['comment_id'] = comment.id
+        response_data['comment_body'] = comment.body
+        response_data['comment_username'] = comment.user.username
+    return HttpResponse(
+        json.dumps(response_data),
+        content_type='application/json')
+
+
+def change_post_update(request):
+    post_id = request.POST['id']
+    post = Post.objects.get(id=post_id)
+    post.update = False
+    post.save()
+    response_data = {'update': 'Succes'}
+    return HttpResponse(
+        json.dumps(response_data),
+        content_type='application/json')
+
+
+def validate_comment(request):
+    comment_id = request.POST['comment_id']
+    comment_validate = Comment.objects.get(id=comment_id)
+    comment_validate.validate = True
+    comment_validate.save()
+    return HttpResponse(
+        json.dumps(True),
+        content_type='application/json')
