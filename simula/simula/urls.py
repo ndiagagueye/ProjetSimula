@@ -19,17 +19,21 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from django.contrib import admin
-from django.urls import include , path
+from django.urls import include, path
 from sim import views
+from django.conf.urls import handler404
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('sim/', include('sim.urls')),
     path('users/', include('users.urls')),
+    path('forum/', include('forum.urls')),
     path('', views.accueil, name="accueil"),
     path('', include('social_django.urls', namespace='social')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+handler404 = views.handler404
+handler500 = views.handler500
 

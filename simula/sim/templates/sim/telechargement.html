@@ -12,7 +12,8 @@
 <style type="text/css">
   body
   {
-    background-color:#f0efe7;
+    background-color: #f0efe7 !important;
+
   }
   p ,a, span 
   {
@@ -52,6 +53,8 @@ th {
 
 </style>
 <div class="container" style="">
+
+  
 <div class="row" style="text-align:left; margin-top: 100px;">
   <div class="col-sm-6">
     <div class="card">
@@ -69,7 +72,7 @@ th {
         {% if lastLogiciel.logiciel64 %}
         <a href="{{MEDIA_URL}}{{lastLogiciel.logiciel64.logiciel.url }}" download="simula_{{lastLogiciel.logiciel64.version.versionDownload}}_{{infosVersion.syste}}_64bits.{{lastLogiciel.logiciel64.extension}}"
           class="btn btn-primary fa fa-download"
-           style="font-size: 1.6em; margin: 1%; background: #03252b;"> 64bits</a> 
+           style="font-size: 1.6em; margin: 1%; background: #03252b; "> 64bits</a> 
            {% endif %}
 
         {% if lastLogiciel.logiciel32 %}
@@ -262,6 +265,9 @@ th {
 </div>
 </div>
 </div>
+
+
+
  <script type="text/javascript">
     $(document).ready(function() {
           

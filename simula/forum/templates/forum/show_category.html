@@ -1,0 +1,83 @@
+{% extends "forum/detail_post.html" %}
+
+{% block titre %}
+<title>Detail article</title>
+
+{% endblock %}
+
+
+<div id="team" class="text-center">
+  <div class="container">
+ 
+
+	<div class="row">
+
+{% block body %}
+
+{% load static %}
+{% load mathfilters %}
+<style type="text/css">
+	
+	.comments-container {
+
+	    margin: 60px auto 15px;
+	    width: 968px;
+
+
+    }
+
+</style>
+
+
+	<!-- Contenedor Principal -->
+
+	<div class="col-md-9">
+    <div class="comments-container">
+		<h1> {{category.name}}<a href="http://creaticode.com"></a></h1>
+
+				{% for post in posts %}
+				<div class="comment-main-level">
+					
+					<!-- Contenedor del Comentario -->
+					<div class="comment-box">
+						<div class="comment-head">
+							<h6 class="comment-name ">{{post.user.username}}</a></h6>
+							<span>
+							{% if nowtime.year > post.date.year  %}
+							 il y'a {{ nowtime.year|sub:post.date.year}} ans
+							{% elif nowtime.mounth > post.date.mounth  %}
+								il y'a {{ nowtime.mounth|sub:post.date.mounth}} mois
+							{% elif nowtime.day > post.date.day %}
+								il y'a {{ nowtime.day |sub:post.date.day}} jours
+							{% elif nowtime.hour > post.date.hour%}
+								il y'a {{ nowtime.hour|sub:post.date.hour}} heures
+							{% elif nowtime.minute > post.date.minute%}
+								il y'a {{ nowtime.minute|sub:post.date.minute}} minutes
+							{% else %}
+								il y'a {{ nowtime.second|sub:post.date.second}} secondes
+							{% endif%}
+
+							</span>
+
+
+							<!-- <i class="fa fa-reply"></i>
+							<i class="fa fa-heart"></i> -->
+						</div>
+						<div class="comment-content"> <a href="{% url 'forum:detail_post' post.id %}">
+							{{post.body}}</a>
+						</div>
+					</div>
+				</div><br>
+				{% endfor %}
+			
+
+
+
+    
+		
+	</div>
+</div>
+	
+
+
+{% endblock%}

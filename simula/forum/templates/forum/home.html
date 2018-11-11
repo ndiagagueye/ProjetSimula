@@ -1,0 +1,250 @@
+{% extends "forum/detail_post.html" %}
+
+{% block titre %}
+<title>à propos</title>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% load static %}
+{% load mathfilters %}
+
+
+<div id="team" class="text-center">
+  <div class="container">
+ 
+
+    <div class="row">
+        <div class="col-md-3">
+
+            <div class="comments-container " id="menuleft">
+
+                <ul>
+                    <li>
+                        <div class="comment-main-level">
+                            <div class="comment-box">
+                                <div class="comment-head">
+                                    
+
+                                     <div class="topnav">
+                                      <input type="text" class="pull-left" placeholder="Recherche...">
+                                      <i class="fa fa-search" class="pull-left" id="icon-search"></i>
+                                    </div> 
+                                    
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </li>
+
+                </ul>
+            
+            </div>
+
+
+            <div class="comments-container menu" id="menuleft">
+
+                <ul>
+                    <li>
+                        <div class="comment-main-level">
+                            <div class="comment-box">
+                                <div class="comment-head category ">
+                                    <h2 class="title-widget-sidebar">Categories</h2>
+                                </div>
+                                <div class="comment-content"  >
+                                     <div class="widget-sidebar">
+                                        {% for category in categories %}
+                                            <a style="color: #fff" href="{% url 'forum:show_category'  category.id %}">
+                                             <button class="categories-btn">
+                                                {{category.name}}
+                                             </button>
+                                            </a>
+                                        {% endfor %}     
+                                        
+                                     </div>  
+        
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+
+                </ul>
+            
+            </div>
+
+            <div class="comments-container menu" id="menuleft">
+
+                <ul>
+                    <li>
+                        <div class="comment-main-level">
+                            <div class="comment-box">
+                                <div class="comment-head category">
+                                    <h6 class="comment-name name " >Menu</h6>
+                                    
+                                    
+                                </div>
+
+                                <div class="comment-content"  >
+
+                                    <div class="">
+                                        {% if user.is_authentificated %}
+                                            <a href=""></a>
+                                            <button class="categories-btn">
+                                                <a class="href" href="{% url 'forum:create_post' %}"> Publier un article</a>
+                                            </button>
+
+                                         {% endif %}
+
+                                        {% if not user.is_authetificated %} 
+                                            <button class="categories-btn">
+                                                <a class="href" href="{% url 'forum:create_post' %}">Se connecter</a>
+                                            </button>
+                                        {% endif %}
+
+                                        {% if not user.is_authentificated  %}
+                                            <button class="categories-btn">
+                                                <a class="href" href="{% url 'forum:create_post' %}">Pas encore membre</a>
+                                            </button>
+                                        {% endif %} 
+
+                                        {% if not user.is_authentifcated %}
+                                            <button class="categories-btn">
+                                                <a class="href" href="{% url 'forum:create_post' %}">Se déconnecter</a>
+                                            </button>                                           
+                                        {% endif %}
+                                    </div>
+            
+        
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+
+                </ul>
+            
+            </div>
+
+        </div>
+
+        {% block body %}
+        <div class="col-md-9">
+            <!-- Contenedor Principal -->
+            <div class="content">
+            <div class="comments-container" >
+
+                <ul id="comments-list" class="comments-list">
+                    <li>
+                        {% for post in posts %}
+                        <div class="comment-main-level">
+                            <!-- Avatar -->
+                            <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+                            <!-- Contenedor del Comentario -->
+
+                            <div class="content-post ">
+                            <div class="comment-box">
+                                <div class="comment-head content-post">
+                                    <h6 class="comment-name by-author"><a href="">Agustin Ortiz</a></h6>
+                                    <span>{{post.date}}</span>
+
+                                    {% if user.is_authenticated%}
+
+                                            <a  class=" pull-right" >
+                                                <i class="fa fa-comment"> commenter</i>
+
+                                            </a>
+
+                                    {% endif %}
+                                    <i class="fa fa-reply"></i>
+                                    <i class="fa fa-heart"></i>
+                                </div>
+                                <div class="comment-content content-post">
+                                    
+                                    {{ post.body}}
+                                </div>
+                            </div>
+
+                            </div>
+                        </div>
+
+                                <!-- comment post -->
+                        <div class="content-post">
+                        <form method="post"  action="/add_comment/" id="comment-form">
+                         {% csrf_token %}
+				        <div class="[  ]" id="comment" class="content-post">
+				            <div class="[ panel panel-default ] panel-google-plus">
+
+				                <div class="panel-footer">
+				                    <button type="button" class="[ btn btn-default ]">+{{ comments|length|sub:1 }}</button>
+				                    <button type="button" class="[ btn btn-default ]">
+				                        <span class="[ glyphicon glyphicon-share-alt ]"></span>
+				                    </button>
+				                    <div class="input-placeholder">Ajouter un commentatire</div>
+				                </div>
+				                <div class="panel-google-plus-comment">
+				                    <img class="img-circle" src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46" alt="User Image" />
+
+				                    <div class="panel-google-plus-textarea">
+				                        {{ form.body }}
+				                        <span></span><br>
+				                        <span style="display: none;">
+				                        <input type="" name="post" id="post_id" value="{{post.id}}"></span>
+				                        <button type="submit" class="[ btn btn-success disabled ]">repondre</button>
+				                        <button type="reset" class="[ btn btn-default ]">Annuler</button>
+				                    </div>
+				                    <div class="clearfix"></div>
+				                </div>
+				            </div>
+				        </div>
+                        </form>
+                       </div>
+
+
+                        <!-- Respuestas de los comentarios -->
+                        <ul class="comments-list reply-list" id="new-comment">
+                        {% for comment in comments %}
+                            <li>
+                                <!-- Avatar -->
+                                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+                                <!-- Contenedor del Comentario -->
+                                <div class="comment-box">
+                                    <div class="comment-head content-comm">
+                                        <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
+                                        <span>hace 10 minutos</span>
+
+                                        <i class="fa fa-heart"></i>
+                                    </div>
+                                    <div class="comment-content content-comm">
+
+                                        {{comment.body}}
+                                    
+                                    </div>
+                                </div>
+
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                        {% endfor %}
+                    </li>
+                </ul>
+            
+            </div>
+
+            </div>
+
+        </div>
+        {% endblock %}
+    
+
+    </div>
+    
+  </div>
+</div>
+
+{% endblock %}

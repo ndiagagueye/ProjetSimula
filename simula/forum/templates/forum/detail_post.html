@@ -1,0 +1,636 @@
+{% extends "sim/galerie.html" %}
+
+{% block titre %}
+<title>Forum de SimulatMath</title>
+
+{% endblock %}
+
+
+{% block page %}
+
+{% load static %}
+{% load mathfilters %}
+
+
+    <link href="{% static "css/forum.css" %}" rel="stylesheet"/>
+
+
+
+<style type="text/css">
+	 .team{
+	    overflow-y:hidden;
+
+	}
+
+	.row{
+		margin-top: -5%;
+	}
+	@media only screen and (max-width:960px){
+	    body{
+	        overflow-y:scroll;
+	    }
+	}
+
+	.container {
+
+	    width: 100% !important;
+
+	}
+	#category{margin-top: 10%;}
+	#menuleft{
+		width: 80%;
+	}
+
+	.panel-google-plus {
+    position: relative;
+    border-radius: 0px;
+    border: 1px solid rgb(216, 216, 216);
+    font-family: 'Roboto', sans-serif;
+}
+.panel-google-plus > .dropdown {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+}
+.panel-google-plus > .dropdown > span > span {
+    font-size: 10px;   
+}
+.panel-google-plus > .dropdown > .dropdown-menu {
+    left: initial;
+    right: 0px;
+    border-radius: 2px;
+}
+.panel-google-plus > .panel-google-plus-tags {
+    position: absolute;
+    top: 35px;
+    right: -3px;
+}
+.panel-google-plus > .panel-google-plus-tags > ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+.panel-google-plus > .panel-google-plus-tags > ul:hover {
+    box-shadow: 0px 0px 3px rgb(0, 0, 0);   
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);   
+}
+.panel-google-plus > .panel-google-plus-tags > ul > li {
+    display: block;
+    right: 0px;
+    width: 0px;
+    padding: 5px 0px 5px 0px;
+    background-color: rgb(245, 245, 245);
+    font-size: 12px;
+    overflow: hidden;
+}
+.panel-google-plus > .panel-google-plus-tags > ul > li::after {
+    content:"";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 100%;
+	border-right: 3px solid rgb(66, 127, 237);
+}
+.panel-google-plus > .panel-google-plus-tags > ul:hover > li,
+.panel-google-plus > .panel-google-plus-tags > ul > li:first-child {
+    padding: 5px 15px 5px 10px;
+    width: auto;
+    cursor: pointer;
+    margin-left: auto;
+}
+.panel-google-plus > .panel-google-plus-tags > ul:hover > li {
+    background-color: rgb(255, 255, 255);   
+}
+.panel-google-plus > .panel-google-plus-tags > ul > li:hover {
+    background-color: rgb(66, 127, 237);
+    color: rgb(255, 255, 255);
+}
+.panel-google-plus > .panel-heading,
+.panel-google-plus > .panel-footer {
+    background-color: rgb(255, 255, 255);
+    border-width: 0px; 
+}
+.panel-google-plus > .panel-heading {
+    margin-top: 20px;    
+    padding-bottom: 5px; 
+}
+.panel-google-plus > .panel-heading > img { 
+    margin-right: 15px;
+}
+.panel-google-plus > .panel-heading > h3 {
+    margin: 0px;
+    font-size: 14px;
+    font-weight: 700;
+}
+.panel-google-plus > .panel-heading > h5 {
+    color: rgb(153, 153, 153);
+    font-size: 12px;
+    font-weight: 400;
+}
+.panel-google-plus > .panel-body {
+    padding-top: 5px;
+    font-size: 13px;
+}
+.panel-google-plus > .panel-body > .panel-google-plus-image {
+    display: block;
+    text-align: center;
+    background-color: rgb(245, 245, 245);
+    border: 1px solid rgb(217, 217, 217);
+}
+.panel-google-plus > .panel-body > .panel-google-plus-image > img {
+    max-width: 100%;
+}
+
+.panel-google-plus > .panel-footer {
+    font-size: 14px;
+    font-weight: 700;
+    min-height: 54px;
+}
+.panel-google-plus > .panel-footer > .btn {
+    float: left;
+    margin-right: 8px;
+}
+.panel-google-plus > .panel-footer > .input-placeholder {
+    display: block;
+    margin-left: 98px;
+    color: rgb(153, 153, 153);
+    font-size: 12px;
+    font-weight: 400;
+    padding: 8px 6px 7px;
+    border: 1px solid rgb(217, 217, 217);
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.0470588) 0px 1px 0px 0px;
+}
+.panel-google-plus.panel-google-plus-show-comment > .panel-footer > .input-placeholder {
+    display: none;   
+}
+.panel-google-plus > .panel-google-plus-comment {
+    display: none;
+    padding: 10px 20px 15px;
+    border-top: 1px solid rgb(229, 229, 229);
+    background-color: rgb(245, 245, 245);
+}
+.panel-google-plus.panel-google-plus-show-comment > .panel-google-plus-comment {
+    display: block;
+}
+/*.panel-google-plus > .panel-google-plus-comment > img {
+    float: left;   
+}*/
+.panel-google-plus > .panel-google-plus-comment > .panel-google-plus-textarea {
+    float: right;
+    width: calc(100% - 56px);
+}
+.panel-google-plus > .panel-google-plus-comment > .panel-google-plus-textarea > textarea {
+    display: block;
+    /*margin-left: 60px;
+    width: calc(100% - 56px);*/
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(217, 217, 217);
+    box-shadow: rgba(0, 0, 0, 0.0470588) 0px 1px 0px 0px;
+    resize: vertical;
+}
+.panel-google-plus > .panel-google-plus-comment > .panel-google-plus-textarea > .btn {
+    margin-top: 10px;
+    margin-right: 8px;
+    width: 100%;
+}
+@media (min-width: 992px) {
+    .panel-google-plus > .panel-google-plus-comment > .panel-google-plus-textarea > .btn {
+        width: auto;
+    }    
+}
+
+
+.panel-google-plus .btn {
+    border-radius: 3px;   
+}
+.panel-google-plus .btn-default {
+    border: 1px solid rgb(217, 217, 217);
+    box-shadow: rgba(0, 0, 0, 0.0470588) 0px 1px 0px 0px;
+}
+.panel-google-plus .btn-default:hover, 
+.panel-google-plus .btn-default:focus, 
+.panel-google-plus .btn-default:active {
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(0, 0, 0);    
+}
+
+
+#comment{
+
+    overflow: hidden;
+    width: 800px;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    margin-left: 15%;
+
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #e9e9e9;
+}
+
+input.pull-left{
+	width: 245px;
+
+}
+
+i#icon-search{
+
+    font-size: 16px;
+    color: #03252b;
+
+    font-size: 3em;
+    margin-right: 1.2%;
+
+
+}
+
+
+.category{
+	font-size: 1.5em;
+/*	background-color: #03252b !important;
+*/	
+}
+.name{
+	/*color: #fff !important;*/
+	margin-left: 40%;
+
+}
+
+.menu{
+/*	border: 1px solid #03252b;
+*/}
+
+.categories-btn {
+    background-color: #f0efe7;
+    margin-top:10px;
+    color: #053740 ;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+    
+}
+.categories-btn:after {
+    content: '\25BA';
+    color: #fff;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+.categories-btn:hover {
+    background-color: #053740; color: #fff;
+}
+
+.form-control{border-radius: 0px;}
+
+.btn-warning {
+    border-radius: 0px;
+    background-color: #F39C12;
+    margin-top: 15px;
+}
+.input-group-addon{border-radius: 0px;}
+
+.title-widget-sidebar {
+    font-size: 14pt;
+    border-bottom: 2px solid #e5ebef;
+    margin-bottom: 15px;
+    padding-bottom: 10px;    
+    margin-top: 0px;
+}
+
+.title-widget-sidebar:after {
+    border-bottom: 2px solid #f1c40f;
+    width: 150px;
+    display: block;
+    position: absolute;
+    content: '';
+    padding-bottom: 10px;
+}
+
+
+.button.categories-btn.menu:hover{
+	color: #fff ;
+}
+
+#comment-text{
+	width: 565px;
+}
+.content-post{
+	width: 800px;
+}
+
+.content-comm{
+	width: 763px;
+}
+
+
+.comments-container {
+
+    margin: 60px 180px 15px;
+    width: 768px;
+
+}
+
+.input-placeholder{
+    margin-left: 15%!important;
+}
+
+
+
+   
+</style>
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+{% block content %}
+<div id="team" class="text-center">
+  <div class="container">
+ 
+
+	<div class="row">
+		<div class="col-md-3 " style="">
+
+			<div class="comments-container " id="menuleft">
+
+				<ul>
+					<li>
+						<div class="comment-main-level">
+							<div class="comment-box">
+								<div class="comment-head">
+									
+
+									 <div class="topnav">
+									  <input type="text" class="pull-left" placeholder="Recherche...">
+									  <i class="fa fa-search" class="pull-left" id="icon-search"></i>
+									</div> 
+									
+									
+								</div>
+
+							</div>
+						</div>
+
+					</li>
+
+				</ul>
+			
+			</div>
+
+
+			<div class="comments-container menu" id="menuleft">
+
+				<ul>
+					<li>
+						<div class="comment-main-level">
+							<div class="comment-box">
+								<div class="comment-head category">
+									<h2 class="title-widget-sidebar">Categories</h2>
+								</div>
+								<div class="comment-content"  >
+						             <div class="widget-sidebar">
+										{% for category in categories %}
+                                            <a style="color: #fff" href="{% url 'forum:show_category'  category.id %}">
+							                 <button class="categories-btn">
+							                 	{{category.name}}
+							                 </button>
+                                            </a>
+							            {% endfor %}     
+						                
+						             </div>  
+        
+								</div>
+							</div>
+						</div>
+
+					</li>
+
+				</ul>
+			
+			</div>
+
+			<div class="comments-container menu" id="menuleft">
+
+				<ul>
+					<li>
+						<div class="comment-main-level">
+							<div class="comment-box">
+								<div class="comment-head category">
+									<h6 class="comment-name name " >Menu</h6>
+									
+									
+								</div>
+
+								<div class="comment-content"  >
+
+									<div class="">
+										{% if user.is_authentificated %}
+										  <a style="color: #fff" href="">
+							                 <button class="categories-btn">
+							                 	Se connecter
+							                 </button>
+                                            </a>
+
+									     {% endif %}
+
+									    {% if not user.is_authetificated %} 
+											<button class="categories-btn menu">
+												<a class="href" href="{% url 'forum:create_post' %}">Se connecter</a>
+											</button>
+									    {% endif %}
+
+									    {% if not user.is_authentificated  %}
+											<button class="categories-btn menu">
+												<a class="href" href="{% url 'forum:create_post' %}">Pas encore membre</a>
+											</button>
+										{% endif %}	
+
+										{% if not user.is_authentifcated %}
+                                            <button class="categories-btn menu">
+												<a class="href" href="{% url 'forum:create_post' %}">Se déconnecter</a>
+											</button>											
+									    {% endif %}
+									</div>
+			
+        
+								</div>
+							</div>
+						</div>
+
+					</li>
+
+				</ul>
+			
+			</div>
+
+	    </div>
+
+	    {% block body %}
+		<div class="col-md-9">
+			<!-- Contenedor Principal -->
+			<div class="content">
+		    <div class="comments-container" >
+
+				<ul id="comments-list" class="comments-list">
+					<li>
+						<div class="comment-main-level">
+							<!-- Avatar -->
+							<div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+							<!-- Contenedor del Comentario -->
+
+							<div class="content-post">
+							<div class="comment-box">
+								<div class="comment-head content-post" >
+									<h6 class="comment-name by-author"><a href="">{{post.user.username}}</a></h6>
+									<span>{{post.date}}</span>
+
+									{% if user.is_authenticated%}
+
+ 			                                <a  class=" pull-right" >
+			                                    <i class="fa fa-comment"> commenter</i>
+
+			                                </a>
+
+	                                {% endif %}
+									<i class="fa fa-reply"></i>
+									<i class="fa fa-heart"></i>
+								</div>
+								<div class="comment-content content-post">
+									
+									{{ post.body}}
+								</div>
+							</div>
+
+							</div>
+						</div>
+
+                        <!-- comment post -->
+                        <div class="content-post">
+                        <form method="post"  action="/add_comment/" id="comment-form">
+                         {% csrf_token %}
+				        <div class="[  ]" id="comment" class="content-post">
+				            <div class="[ panel panel-default ] panel-google-plus">
+				           
+				                <div class="panel-footer">
+				                    <button type="button" class="[ btn btn-default ]">+{{ comments|length|sub:1 }}</button>
+				                    <button type="button" class="[ btn btn-default ]">
+				                        <span class="[ glyphicon glyphicon-share-alt ]"></span>
+				                    </button>
+				                    <div class="input-placeholder">Ajouter un commentatire</div>
+				                </div>
+				                <div class="panel-google-plus-comment">
+				                    <img class="img-circle" src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46" alt="User Image" />
+
+				                    <div class="panel-google-plus-textarea">
+				                        {{ form.body }}
+				                        <span></span><br>
+				                        <span style="display: none;">
+				                        <input type="" name="post" id="post_id" value="{{post.id}}"></span>
+				                        <button type="submit" class="[ btn btn-success disabled ]">repondre</button>
+				                        <button type="reset" class="[ btn btn-default ]">Annuler</button>
+				                    </div>
+				                    <div class="clearfix"></div>
+				                </div>
+				            </div>
+				        </div>
+                        </form>
+                       </div>
+
+						<!-- Respuestas de los comentarios -->
+						<ul class="comments-list reply-list" id="new-comment">
+                        {% for comment in comments %}
+							<li>
+								<!-- Avatar -->
+								<div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+								<!-- Contenedor del Comentario -->
+								<div class="comment-box">
+									<div class="comment-head content-comm">
+										<h6 class="comment-name ">{{post.user.username}}</h6>
+										<span>
+										{% if nowtime.year > post.date.year  %}
+										 il y'a {{ nowtime.year|sub:post.date.year}} ans
+										{% elif nowtime.mounth > post.date.mounth  %}
+											il y'a {{ nowtime.mounth|sub:post.date.mounth}} mois
+										{% elif nowtime.day > post.date.day %}
+											il y'a {{ nowtime.day |sub:post.date.day}} jours
+										{% elif nowtime.hour > post.date.hour%}
+											il y'a {{ nowtime.hour|sub:post.date.hour}} heures
+										{% elif nowtime.minute > post.date.minute%}
+											il y'a {{ nowtime.minute|sub:post.date.minute}} minutes
+										{% else %}
+											il y'a {{ nowtime.second|sub:post.date.second}} secondes
+										{% endif%}
+									    </span>
+
+										<i class="fa fa-check" style="font-size: 2em; color: #00a65a"></i>
+                                    	<i  style="font-size: 2em;">3 notes</i>
+
+									</div>
+									<div class="comment-content content-comm">
+
+										{{comment.body}}
+									
+									</div>
+								</div>
+
+							</li>
+							{% endfor %}
+						</ul>
+					</li>
+				</ul>
+			
+			</div>
+
+			</div>
+
+		</div>
+		{% endblock %}
+	
+
+	</div>
+    
+  </div>
+</div>
+{% endblock %}
+
+<script type="text/javascript">
+
+	$(function () {
+   $('.panel-google-plus > .panel-footer > .input-placeholder, .panel-google-plus > .panel-google-plus-comment > .panel-google-plus-textarea > button[type="reset"]').on('click', function(event) {
+        var $panel = $(this).closest('.panel-google-plus');
+            $comment = $panel.find('.panel-google-plus-comment');
+            
+        $comment.find('.btn:first-child').addClass('disabled');
+        $comment.find('textarea').val('');
+        
+        $panel.toggleClass('panel-google-plus-show-comment');
+        
+        if ($panel.hasClass('panel-google-plus-show-comment')) {
+            $comment.find('textarea').focus();
+        }
+   });
+   $('.panel-google-plus-comment > .panel-google-plus-textarea > #comment-text').on('keyup', function(event) {
+        var $comment = $(this).closest('.panel-google-plus-comment');
+        
+        $comment.find('button[type="submit"]').addClass('disabled');
+        if ($(this).val().length >= 1) {
+            $comment.find('button[type="submit"]').removeClass('disabled');
+        }
+   });
+});
+	</script>
+	    <script type="text/javascript" src="{% static "js/add_comment.js" %}" ></script>
+{% endblock%}

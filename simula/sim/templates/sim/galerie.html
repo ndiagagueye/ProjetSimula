@@ -270,6 +270,8 @@
             color: black;
         }
   </style>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
 </head>
 <body>
 <div class="blockpage">
@@ -283,7 +285,7 @@
        <li><a href="{% url "documentation_simula" %}">Documentation </a></li>
        <li><a href="{% url "apropos" %}">A propos </a></li>
        <li><a href="{% url "exercices_corrige" %}">Exercices corrigés</a></li>
-       <li><a href="{% url "forum" %}">Forum</a></li>
+       <li><a href="">Forum</a></li>
        <li><a href="{% url "communaute" %}">Communauté</a></li>
        <li><a href="{% url "galerie" %}">Galeries</a></li>
        <li><a href="{% url "contact" %}">Contact</a></li>
@@ -444,7 +446,7 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-about-us">
                         <h2>S<span>imulaMath</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis</p>
                         <div class="footer-social">
                             <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
                             <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
@@ -458,25 +460,27 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Navigation</h2>
                         <ul>
-                            <li><a href="#">Accueil</a></li>
-                            <li><a href="#">A propos</a></li>
-                            <li><a href="#">galere</a></li>
-                            <li><a href="#">Donate</a></li>
-                            <li><a href="#">Forum</a></li>
-                            <li><a href="#">Communaute</a></li>
+                           
+                            <li><a href="{% url "accueil" %}">Acceuil</a></li>
+                            <li><a href="{% url "documentation_simula" %}">Documentation </a></li>
+                            <li><a href="{% url "apropos" %}">A propos </a></li>
+                            <li><a href="{% url "exercices_corrige" %}">Exercices corrigés</a></li>
+                            <li><a href="#">Aide</a></li>
+
+
                         </ul>                        
                     </div>
                 </div>
                 
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
-                        <h2 class="footer-wid-title">Categories</h2>
+                        <h2 class="footer-wid-title">Navigation</h2>
                         <ul>
-                            <li><a href="#">Mobile Phone</a></li>
-                            <li><a href="#">Home accesseries</a></li>
-                            <li><a href="#">LED TV</a></li>
-                            <li><a href="#">Computer</a></li>
-                            <li><a href="#">Gadets</a></li>
+                            <li><a href="">Forum</a></li>
+                            <li><a href="{% url "communaute" %}">Communauté</a></li>
+                            <li><a href="{% url "galerie" %}">Galeries</a></li>
+                            <li><a href="{% url "contact" %}">Contact</a></li>
+                            <li><a href="{% url "donate" %}">Donation</a></li>
                         </ul>                        
                     </div>
                 </div>
@@ -502,7 +506,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="copyright">
-                        <p>&copy; 2017 Systeme de Contenu Collaratif<a href="#" target="_blank">freshDesignweb.com</a></p>
+                        <p>&copy; 2017-2018 Systeme de Contenu Collaratif<a href="#" target="_blank">freshDesignweb.com</a></p>
                     </div>
                 </div>
                 

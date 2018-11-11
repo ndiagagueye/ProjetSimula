@@ -20,7 +20,6 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}">
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet"/>
-    <link href="{% static "css/footer.css" %}" rel="stylesheet"/>
     <link href="{% static "css/about.css" %}" rel="stylesheet"/>
 
     <link rel="stylesheet" type="text/css" href="{% static "css/datatables.min.css" %}"/>
@@ -282,6 +281,14 @@
             botom: 0;
         }
 
+
+
+        .footer-about-us span {
+           color: #5a88ca;
+        }
+
+
+
     
     
 
@@ -344,7 +351,7 @@
     <div class="col-lg-2 menue-g">
         <span class="telecharger">Téléchager pour {{infosVersion.syste}}</span><br>
         <span style="color: white;">Derniere version: </span><br>
-        <span class="version"> Simula {{infosVersion.version_view}}<br></span>
+        <!-- <span class="version"> Simula {{infosVersion.version_view}}<br></span>
         {% if lastLogiciel.logiciel64 or lastLogiciel.logiciel32%}
         {% if lastLogiciel.logiciel64 %}
         <span class= "documentation" style="margin:3px; "><a href="{{MEDIA_URL}}{{lastLogiciel.logiciel64.logiciel.url }}" download="simula_{{lastLogiciel.logiciel64.version.versionDownload}}_{{infosVersion.syste}}_64bits.{{lastLogiciel.logiciel64.extension}}" 
@@ -356,7 +363,7 @@
         {%endif%}
         {% else %}
         <img title="La derniére version n'est pas encore compatible avec votre systéme " style="width: 25px ;" src="{% static "image/erreur_syste.png" %}"/>
-        {% endif %}
+        {% endif %} -->
         <br><br> <br>
         
         
@@ -481,10 +488,11 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
+
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-about-us">
-                        <h2>u<span>Stora</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
+                        <h2 style="color: rgb(37, 186, 208); font-size: 40px;">S<span>IMULAMATH</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis</p>
                         <div class="footer-social">
                             <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
                             <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
@@ -496,26 +504,29 @@
                 
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
-                        <h2 class="footer-wid-title">User Navigation </h2>
+                        <h2 class="footer-wid-title">Navigation</h2>
                         <ul>
-                            <li><a href="#">Accueil</a></li>
-                            <li><a href="#">A propos</a></li>
-                            <li><a href="#"></a></li>
+                           
+                            <li><a href="{% url "accueil" %}">Acceuil</a></li>
+                            <li><a href="{% url "documentation_simula" %}">Documentation </a></li>
+                            <li><a href="{% url "apropos" %}">A propos </a></li>
+                            <li><a href="{% url "exercices_corrige" %}">Exercices corrigés</a></li>
                             <li><a href="#">Aide</a></li>
-                            <li><a href="#">Communaute</a></li>
+
+
                         </ul>                        
                     </div>
                 </div>
                 
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
-                        <h2 class="footer-wid-title">Categories</h2>
+                        <h2 class="footer-wid-title">Navigation</h2>
                         <ul>
-                            <li><a href="#">Mobile Phone</a></li>
-                            <li><a href="#">Home accesseries</a></li>
-                            <li><a href="#">LED TV</a></li>
-                            <li><a href="#">Computer</a></li>
-                            <li><a href="#">Gadets</a></li>
+                            <li><a href="{% url "forum" %}">Forum</a></li>
+                            <li><a href="{% url "communaute" %}">Communauté</a></li>
+                            <li><a href="{% url "galerie" %}">Galeries</a></li>
+                            <li><a href="{% url "contact" %}">Contact</a></li>
+                            <li><a href="{% url "donate" %}">Donation</a></li>
                         </ul>                        
                     </div>
                 </div>
@@ -566,6 +577,7 @@
     <script type="text/javascript" src="{% static "js/main.js" %}"></script>
 
     <script type="text/javascript" src="{% static "js/datatables.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/adminlte.min.js" %}" ></script>
 
     
     <!-- Slider -->

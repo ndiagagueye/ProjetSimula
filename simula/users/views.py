@@ -8,6 +8,7 @@ from .models import *
 from .forms import *
 
 
+
 def login(request):
     error = False
     form = LoginForm(request.POST or None)
@@ -54,3 +55,27 @@ def register(request):
                 login(request, new_user)                
     return render(request, 'users/register.html', locals())
 	
+def profile(request):
+    error = False
+    if request.method == ["POST"]:
+        profession = request.POST['select-profession']
+        #if profession == "" :
+
+        if profession == "Professeur" or profession == "Eleve" or profession == "Etudiant" or profession == "Docteur" or profession == "Enseignant chercher":
+
+            error = False
+            prof = User.objects.get(id=3)
+            prof.value = profession
+            prof.save
+        else:
+
+            error = True
+            
+        
+    else:
+
+        error = False
+        
+                  
+    return render(request, 'users/profile.html', locals())
+    

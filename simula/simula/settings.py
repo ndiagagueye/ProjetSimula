@@ -46,8 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sim',
     'users',
-
+    'forum',
     'social_django',
+    'mathfilters'
 
 ]
 
@@ -91,7 +92,7 @@ WSGI_APPLICATION = 'simula.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'simula',
+        'NAME': 'simulamaths',
         'USER': 'sumi',
         'PASSWORD': 'simu',
         'HOST': 'localhost',
