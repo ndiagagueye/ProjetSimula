@@ -27,13 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'simulamath.sn@gmail.com'
-EMAIL_HOST_PASSWORD = 'simula2018'
+EMAIL_HOST_USER = 'ndiagaaa.gueye@gmail.com'
+EMAIL_HOST_PASSWORD = 'ndiagaa25081996'
 EMAIL_USE_TLS = True
-
 
 # Application definition
 
@@ -48,7 +46,8 @@ INSTALLED_APPS = [
     'users',
     'forum',
     'social_django',
-    'mathfilters'
+    'mathfilters',
+    'channels',
 
 ]
 
@@ -83,6 +82,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'simula.wsgi.application'
+ASGI_APPLICATION = "simula.routing.application"
 
 
 # Database
@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'simula.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'simulamaths',
+        'NAME': 'simula_maths',
         'USER': 'sumi',
         'PASSWORD': 'simu',
         'HOST': 'localhost',

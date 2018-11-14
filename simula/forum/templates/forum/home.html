@@ -4,7 +4,13 @@
 <title>à propos</title>
 
 {% endblock %}
-
+<style>
+    @media only screen and (max-width:960px){
+    body{
+        overflow-y:scroll;
+    }
+}
+</style>
 
 {% block content %}
 
@@ -27,11 +33,13 @@
                             <div class="comment-box">
                                 <div class="comment-head">
                                     
-
-                                     <div class="topnav">
-                                      <input type="text" class="pull-left" placeholder="Recherche...">
-                                      <i class="fa fa-search" class="pull-left" id="icon-search"></i>
-                                    </div> 
+                                     <form method="post">
+                                         {% csrf_token %}
+                                         <div class="topnav">
+                                          <input name="query" type="text" class="pull-left" placeholder="Recherche...">
+                                          <i class="fa fa-search" class="pull-left" id="icon-search"></i>
+                                         </div>
+                                    </form>
                                     
                                     
                                 </div>
@@ -92,7 +100,7 @@
                                 <div class="comment-content"  >
 
                                     <div class="">
-                                        {% if user.is_authentificated %}
+                                        {% if user.is_authenticated %}
                                             <a href=""></a>
                                             <button class="categories-btn">
                                                 <a class="href" href="{% url 'forum:create_post' %}"> Publier un article</a>
@@ -100,19 +108,19 @@
 
                                          {% endif %}
 
-                                        {% if not user.is_authetificated %} 
+                                        {% if not user.is_authenticated %}
                                             <button class="categories-btn">
                                                 <a class="href" href="{% url 'forum:create_post' %}">Se connecter</a>
                                             </button>
                                         {% endif %}
 
-                                        {% if not user.is_authentificated  %}
+                                        {% if not user.is_authenticated  %}
                                             <button class="categories-btn">
                                                 <a class="href" href="{% url 'forum:create_post' %}">Pas encore membre</a>
                                             </button>
                                         {% endif %} 
 
-                                        {% if not user.is_authentifcated %}
+                                        {% if not user.is_authenticated %}
                                             <button class="categories-btn">
                                                 <a class="href" href="{% url 'forum:create_post' %}">Se déconnecter</a>
                                             </button>                                           

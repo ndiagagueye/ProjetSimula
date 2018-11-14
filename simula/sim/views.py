@@ -127,9 +127,9 @@ def contact(request):
         email = request.POST['email']
         message = request.POST['message']
 
-        email = EmailMessage('Message de ' + name + ' <' + email + '> ', message, email, ['douss.sy@gmail.com'])
+        email = EmailMessage('Message de ' + name + ' <' + email + '> ', message, email, ['ndiagaaa.gueye@gmail.com'])
         email.send()
-        send = True
+        #send = True
 
     return render(request, "sim/contact.html", locals())
 
@@ -145,26 +145,3 @@ def handler500(request):
 def error_404_view(request, exception):
     data = {"name": "ThePythonDjango.com"}
     return render(request,'error/404.html', data)
-
-
-"""
-
-#Creer une table 
-NB: Seul l'administrateur du site aurra la possibilité d'ajouter ou de modifier 
-	version : Sumila 1.0 
-	systeme : windows (un select)
-	architecture : 32bits(un select)
-
-
-
-
-
-
-
-
-
-
-#Posibilité de téléchargement 
-<a href="lien/du/fichier" download> telecharger </a>
-
-"""

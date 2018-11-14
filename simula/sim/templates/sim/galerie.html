@@ -26,6 +26,8 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="{% static "image/sim_icon5.ico" %}"/>
     <link href="{% static "css/footer.css" %}" rel="stylesheet"/>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static "css/owl.carousel.css" %}">
@@ -285,7 +287,7 @@
        <li><a href="{% url "documentation_simula" %}">Documentation </a></li>
        <li><a href="{% url "apropos" %}">A propos </a></li>
        <li><a href="{% url "exercices_corrige" %}">Exercices corrigés</a></li>
-       <li><a href="">Forum</a></li>
+       <li><a href="{% url "forum:home" %}">Forum</a></li>
        <li><a href="{% url "communaute" %}">Communauté</a></li>
        <li><a href="{% url "galerie" %}">Galeries</a></li>
        <li><a href="{% url "contact" %}">Contact</a></li>
@@ -295,18 +297,22 @@
        <li class= "right" id="telecharger"><a href="{% url "telechargement" %}" class="download">Téléchargement </a></li>
        <li class="dropdown right" > 
            <a data-toggle="dropdown" role="buton" href="#">
-           
-                
-                <span class="fa fa-user"></span>
+
+
+                <span style="font-size: 1.5em;" class="fa fa-user"></span>
             </a>
             <ul class="dropdown-menu">
               
               
-              <li><a href="">Connexion</a></li>
+              <li><a href="{% url "users:register" %}">Connexion</a></li>
              
               <li class="divider"></li>
            
-              <li><a href="">Incription</a></li>
+              <li><a href="{% url "users:login" %}">Incription</a></li>
+
+                 <li class="divider"></li>
+
+              <li><a href="{% url "users:logout" %}">Déconnexion</a></li>
             </ul>
 
         </li>
@@ -319,10 +325,6 @@
 
     </ul>
 </nav>
-
-
-
-
 
 
 {% block page %}
@@ -501,12 +503,12 @@
         </div>
     </div> <!-- End footer top area -->
     
-    <div class="footer-bottom-area">
+    <div class="footer-bottom-area col-lg-12"  >
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
-                    <div class="copyright">
-                        <p>&copy; 2017-2018 Systeme de Contenu Collaratif<a href="#" target="_blank">freshDesignweb.com</a></p>
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="copyright" >
+                        <p style="font-size: 1.5em;" id="copy">&copy; 2017-2018 SimulaMaths pour l'enseignement des <a href="#" target="_blank">Mathématiques</a></p>
                     </div>
                 </div>
                 
@@ -514,7 +516,6 @@
             </div>
         </div>
     </div> <!-- End footer bottom area -->
-
 
 
 <script type="text/javascript" src="{% static "static_galerie/js/jquery.1.11.1.js" %}"></script> 
@@ -526,5 +527,6 @@
 <script type="text/javascript" src="{% static "static_galerie/js/contact_me.jss" %}"></script> 
 <script type="text/javascript" src="{% static "static_galerie/js/main.js"  %}"></script>
 
-
+</div>
+</body>
 

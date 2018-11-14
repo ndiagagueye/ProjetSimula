@@ -32,7 +32,7 @@ def register(request):
     form = RegisterForm(request.POST or None)
     username_error = password_error = password_length_error = False
     if form.is_valid():
-        name = form.cleaned_data['name']
+        # name = form.cleaned_data['name']
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
         password_confirm = form.cleaned_data['password_confirm']
@@ -46,38 +46,51 @@ def register(request):
                 if user.username == email:
                     username_error = True
             if not username_error:
-                new_user = User.objects.create_user(email,  email, password)
-                new_user.name = name
+                new_user = User.objects.create_user(email, email, password)
+                # new_user.name = name
                 user = Users()
                 user.user = new_user
-                user.name = name
+                # user.name = name
                 user.save()
 
-                new_user = authenticate(email=user.username, password=password)
-
+                new_user = authenticate(username=email, password=password)
                 dj_login(request, new_user)
+
+                return redirect('users:profile')
+
     return render(request, 'users/register.html', locals())
 
 
+def logout(request):
+    logout(request)
+
+
 def profile(request):
-    error = False
-    if request.method == ["POST"]:
-        profession = request.POST['select-profession']
-        # if profession == "" :
+    professions = ['professeur', 'etudiant', 'eleve', 'enseignant_chercher', 'docteur']
 
-        if profession == "Professeur" or profession == "Eleve" or profession == "Etudiant" or profession == "Docteur" or profession == "Enseignant chercher":
+    profile_user = Profile.objects.get(user__id=request.user.id)
+    user_profile = False
+    if len(profile_user.name) > 0 and len(profile_user.profession) > 0:
+        user_profile = True
 
+    if request.POST:
+        profession = request.POST['profession']
+        full_name = request.POST['name']
+
+        if profession in professions:
             error = False
-            prof = User.objects.get(id=3)
-            prof.value = profession
-            prof.save
-        else:
+            profile = Profile(user=request.user, name= full_name, profession = profession)
+            if user_profile==True:
+                profile_user.user = request.user
+                profile_user.name = full_name
+                profile_user.profession = profession
+                profile_user.save()
 
-            error = True
+            else:
 
+                profile.save()
 
-    else:
+            return redirect('/')
 
-        error = False
 
     return render(request, 'users/profile.html', locals())

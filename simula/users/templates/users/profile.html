@@ -4,10 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Completer profile</title>
+            {% load static %}
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="{% static "image/sim_icon5.ico" %}"/>
   
         <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Lato|Quicksand'>
         <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
-        {% load static %}
 
         <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet"/>
 
@@ -16,10 +19,32 @@
 
         <style type="text/css">
           
-          .error{
-            width: 30%;
-            font-size: 1.3em;
-          }
+              .error{
+                width: 30%;
+                font-size: 1.3em;
+              }
+              #prof{
+                  display: none;
+              }
+            #name, btn{
+                height: 50px;
+                width: 400px;
+                margin-top: 2%;
+                font-size: 1.5em;
+
+            }
+          #save{
+                height: 50px;
+                width: 400px;
+                margin-top: 2%;
+                font-size: 1.5em;
+
+            }
+            #title{
+                opacity: 1;
+                color: #b7b5b5;
+            }
+
         </style>
  
 </head>
@@ -27,7 +52,12 @@
 <body>
 
   <center>
-    {% if error == True %}
+      <h2 id="title">Completer votre inscription</h2><br>
+      <img width="100" height="100" class="img-circle" src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46" alt="User Image" />
+</center>
+
+  <center>
+    {% if error == False %}
 
         <div class="error">
           <div class="alert alert-danger fade in">
@@ -39,27 +69,48 @@
           </div>
         </div>
 
-    {% endif %}    
+    {% endif %}
+
   </center>
 
-  <form method = "get" action = "">
+  <form method = "post" action = "">
     {% csrf_token %}
+
+    {% if user_profile == True %}
+       <input id="name" name="name" value="{{ profile_user.name }}" placeholder="Nom complet" required = "required"><br>
+
+    {% else %}
+
+      <input id="name" name="name" placeholder="Nom complet" required = "required"><br>
+
+    {% endif %}
       <div class="sel sel--black-panther">
-      <select name="select-profession" id="select-profession">
-        <option value="pro" disabled>Profession</option>
-        <option value="Professeur">Professeur</option>
-        <option value="Enseignant chercher">Enseignant chercher</option>
-        <option value="Docteur">Docteur</option>
-        <option value="Etudiant">Etudiant</option>
-        <option value="Eleve">Eleve</option>
+      <select name="profession" id="select-profession">
+        <option value="Profession" disabled >Profession</option>
+        <option value="Prof" id="prof" disabled></option>
+
+          {% for profession in professions %}
+
+              <option value="{{ profession }}">{{ profession }}</option>
+
+
+          {% endfor %}
+
       </select>
-    </div>
-    <input class="btn btn-primary" type = "submit" value="Enregistrer">
-  </form>  
+    </div><br>
+    <input id="save" class="btn btn-primary" type = "submit" value="Enregistrer">
+  </form>
+  <br><br>
 
-<hr class="rule">
+  {{ profile_user.name }} {{ profile_user.profession }} {{ id }}
 
-{{ell}}
+  <hr class="rule">
+  <a href="{% url 'accueil' %}">
+          <input id="save" class="btn btn-default" type = "submit" value="Annuler"><br><br>
+  </a>
+
+
+
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 

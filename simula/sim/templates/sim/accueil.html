@@ -9,6 +9,8 @@
     {% load static %}
 
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="{% static "image/sim_icon5.ico" %}"/>
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet"/>
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -320,13 +322,18 @@
                 
                 <span style="color: white;" class="glyphicon glyphicon-user"></span>
             </a>
-            <ul class="dropdown-menu">     
-              
-              <li><a href="">Connexion</a></li>
-             
+            <ul class="dropdown-menu">
+
+
+              <li><a href="{% url "users:register" %}">Connexion</a></li>
+
               <li class="divider"></li>
-           
-              <li><a href="">Incription</a></li>
+
+              <li><a href="{% url "users:login" %}">Incription</a></li>
+
+                 <li class="divider"></li>
+
+              <li><a href="{% url "users:logout" %}">Déconnexion</a></li>
             </ul>
 
         </li>
@@ -550,9 +557,9 @@
     <div class="footer-bottom-area col-lg-12">
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-8 col-md-offset-2">
                     <div class="copyright">
-                        <p>&copy; 2017 Systeme de Contenu Collaratif<a href="#" target="_blank">freshDesignweb.com</a></p>
+                        <p style="font-size: 1.5em;">&copy; 2017-2018 SimulaMaths pour l'enseignement des <a href="#" target="_blank">Mathématiques</a></p>
                     </div>
                 </div>
                 

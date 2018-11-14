@@ -17,6 +17,12 @@ from django.views.generic import CreateView
 from django.views import generic
 from datetime import datetime
 import json
+from django.db.models import Q
+
+from django import template
+
+register = template.Library()
+
 
 
 def show_category(request, pk):
@@ -61,7 +67,7 @@ def create_post(request):
 
     return render(request, "forum/create_post.html", locals())
 
-
+@login_required()
 def add_comment(request):
     if request.method == 'POST':
         comment_text = request.POST.get('body')
@@ -113,7 +119,7 @@ def change_post_update(request):
         json.dumps(response_data),
         content_type='application/json')
 
-
+@login_required()
 def validate_comment(request):
     comment_id = request.POST['comment_id']
     comment_validate = Comment.objects.get(id=comment_id)
@@ -122,3 +128,101 @@ def validate_comment(request):
     return HttpResponse(
         json.dumps(True),
         content_type='application/json')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @register.filter
+# def time_ago(timestamp=None):
+#
+#     timeDiff = datetime.datetime.now() - timestamp
+#     days = timeDiff.days
+#     hours = timeDiff.seconds / 3600
+#     minutes = timeDiff.seconds % 3600 / 60
+#     seconds = timeDiff.seconds % 3600 % 60
+#
+#     str = ""
+#     tStr = ""
+#     if days > 0:
+#         if days == 1:
+#             tStr = "jour"
+#         else:
+#             tStr = "jours"
+#         str = str + "%s %s" % (days, tStr)
+#         return str
+#     elif hours > 0:
+#         if hours == 1:
+#             tStr = "heure"
+#         else:
+#             tStr = "heures"
+#         str = str + "%s %s" % (hours, tStr)
+#         return str
+#     elif minutes > 0:
+#         if minutes == 1:
+#             tStr = "minute"
+#         else:
+#             tStr = "minutes"
+#         str = str + "%s %s" % (minutes, tStr)
+#         return str
+#     elif seconds > 0:
+#         if seconds == 1:
+#             tStr = "seconde"
+#         else:
+#             tStr = "secondes"
+#         str = str + "%s %s" % (seconds, tStr)
+#         return str
+#     else:
+#         return None

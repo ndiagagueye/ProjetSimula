@@ -9,6 +9,7 @@
 {% block page %}
 
 {% load static %}
+
 {% load mathfilters %}
 
 
@@ -351,6 +352,14 @@ i#icon-search{
     display: block;
 }
 
+p#copy{
+    margin-top: 6%;
+}
+
+
+
+
+
    
 </style>
 
@@ -360,6 +369,7 @@ i#icon-search{
 <!------ Include the above in your HEAD tag ---------->
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 {% block content %}
 <div id="team" class="text-center">
@@ -440,7 +450,7 @@ i#icon-search{
 								</div>
 								<div class="comment-content"  >
 						             <div class="widget-sidebar">
-										{% if not user.is_authentificated %}
+										{% if not user.is_authenticated %}
                                             <a style="color: #fff" href="{% url 'users:login' %}">
 							                 <button class="categories-btn">
 							                 	Se connecter
@@ -448,7 +458,7 @@ i#icon-search{
                                             </a>
 							            {% endif %}
 
-                                     {% if  user.is_authentificated %}
+                                     {% if  user.is_authenticated %}
                                             <a style="color: #fff" href="{% url 'forum:create_post' %}">
 							                 <button class="categories-btn">
 							                 	Poser une question
@@ -456,7 +466,7 @@ i#icon-search{
                                             </a>
 							            {% endif %}
 
-                                     {% if user.is_authentificated %}
+                                      {% if user.is_authenticated %}
                                             <a style="color: #fff" href="{% url 'users:logout' %}">
 							                 <button class="categories-btn">
 							                 	Se déconnecter
@@ -464,7 +474,7 @@ i#icon-search{
                                             </a>
 							            {% endif %}
 
-                                     {% if not user.is_authentificated %}
+                                     {% if not user.is_authenticated %}
                                             <a style="color: #fff" href="{% url 'users:register' %}">
 							                 <button class="categories-btn">
                                                  Créer un compte
@@ -526,7 +536,7 @@ i#icon-search{
 							</div>
 						</div>
 
-                        <!-- comment post -->
+                        <!-- response question -->
                         <div class="content-post">
                         <form method="post"  action="/add_comment/" id="comment-form">
                          {% csrf_token %}
@@ -548,7 +558,7 @@ i#icon-search{
 				                        <span></span><br>
 				                        <span style="display: none;">
 				                        <input type="" name="post" id="post_id" value="{{post.id}}"></span>
-				                        <button type="submit" class="[ btn btn-success disabled ]">repondre</button>
+				                        <button id="comment-message-submit" type="submit" class="[ btn btn-success disabled ]">repondre</button>
 				                        <button type="reset" class="[ btn btn-default ]">Annuler</button>
 				                    </div>
 				                    <div class="clearfix"></div>
@@ -557,6 +567,8 @@ i#icon-search{
 				        </div>
                         </form>
                        </div>
+                    <!-- end response question -->
+
 
 						<!-- Respuestas de los comentarios -->
 						<ul class="comments-list reply-list" id="new-comment">
@@ -567,8 +579,9 @@ i#icon-search{
 								<!-- Contenedor del Comentario -->
 								<div class="comment-box">
 									<div class="comment-head content-comm">
-										<h6 class="comment-name ">{{post.user.username}}</h6>
+										<h6 class="comment-name {% if post.user == comment.user %} by-author {% endif %} ">{{post.user.username}}</h6>
 										<span>
+
 										{% if nowtime.year > post.date.year  %}
 										 il y'a {{ nowtime.year|sub:post.date.year}} ans
 										{% elif nowtime.mounth > post.date.mounth  %}
@@ -581,16 +594,21 @@ i#icon-search{
 											il y'a {{ nowtime.minute|sub:post.date.minute}} minutes
 										{% else %}
 											il y'a {{ nowtime.second|sub:post.date.second}} secondes
-										{% endif%}
+										{% endif %}
 									    </span>
+
                                         {% if comment.validate == False %}
                                         <i  id="valide-{{ comment.id }}" class='hide fa fa-check' style='font-size: 2em; color: #00a65a;'></i>
-                                                {% if is_superuser == True %}
+
+                                                {% if user.is_superuser == True %}
                                                     <button  id="button-validate-{{ comment.id }}"  class="show btn btn pull-right" style="font-size: 1.2em; color: #0d6aad">valider</button>
-                                            {% endif %}
-                                        {% else %}
-                                             <i class='fa fa-check' style='font-size: 2em; color: #00a65a;'></i>
+                                                {% endif %}
                                         {% endif %}
+
+                                        {% if comment.validate == True %}
+                                            <i class='fa fa-check' style='font-size: 2em; color: #00a65a;'></i>
+                                        {% endif %}
+
 									</div>
 									<div class="comment-content content-comm">
 
@@ -631,17 +649,24 @@ i#icon-search{
 			
 			</div>
 
+
+
+
 			</div>
+
+
 
 		</div>
 		{% endblock %}
-	
+
 
 	</div>
-    
+
   </div>
 </div>
 {% endblock %}
+
+
 
 <script type="text/javascript">
 
@@ -656,7 +681,7 @@ i#icon-search{
         $panel.toggleClass('panel-google-plus-show-comment');
         
         if ($panel.hasClass('panel-google-plus-show-comment')) {
-            $comment.find('textarea').focus();
+            $comment.find('#-text').focus();
         }
    });
    $('.panel-google-plus-comment > .panel-google-plus-textarea > #comment-text').on('keyup', function(event) {
@@ -665,12 +690,14 @@ i#icon-search{
         $comment.find('button[type="submit"]').addClass('disabled');
         if ($(this).val().length >= 1) {
             $comment.find('button[type="submit"]').removeClass('disabled');
+            $comment.find('button[type="submit"]').addClass('btn btn-success');
         }
    });
 });
 
 
 
-	</script>
-	    <script type="text/javascript" src="{% static "js/add_comment.js" %}" ></script>
+</script>
+<script type="text/javascript" src="{% static "js/add_comment.js" %}" ></script>
+
 {% endblock%}
