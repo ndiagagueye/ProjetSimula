@@ -1,7 +1,6 @@
 $(function() {
     $('#comment-form').on('submit', function(event){
         event.preventDefault();
-        console.log("form submitted!")  // sanity check
         add_comment();
     });
 
@@ -19,7 +18,7 @@ $(function() {
 
     }
 
-    setInterval(function () {
+    /*setInterval(function () {
         $.ajax({
             url : "/forum/update_post",
             type : "POST",
@@ -37,28 +36,22 @@ $(function() {
 
                 }
             }
-        });
+        });  
 
-    }, 1000);
+    }, 1000); */
 
 
 
     // AJAX for posting
     function add_comment() {
-        console.log("create post is working!") // sanity check
+        console.log("create post is working!")
         $.ajax({
-            url : "/forum/add_comment", // the endpoint
-            type : "POST", // http method
-            data : { body : $('#comment-text').val(), post_id: $('#post_id').val()}, // data sent with the post request
-            // handle a successful response
+            url : "/forum/add_comment",
+            type : "POST",
+            data : { body : $('#comment-text').val(), post_id: $('#post_id').val()},
             success : function(json) {
                 $('#comment-text').val('');
             },
-            error : function(xhr,errmsg,err) {
-                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-            }
         });
     };
 

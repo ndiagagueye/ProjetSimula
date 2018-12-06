@@ -15,11 +15,9 @@ from .views import(
 #from blog.views.register import RegisterView
 app_name = 'forum'
 urlpatterns = [
-
-    
       path('post/<int:pk>/detail', detail_post, name = "detail_post"),
-      re_path('post/<int:pk>/detail', detail_post, name="detail_post"),
-
+      #path('post/<int:pk>/detail', detail_post, name="detail"),
+      
       path('',  home, name = "home"),
       path('validate_comment', validate_comment, name="validate_comment"),
       path('add_comment', add_comment, name = "add_comment"),
@@ -27,6 +25,4 @@ urlpatterns = [
       path('update_post', update_post, name = "update_post"),
       path('create/', create_post, name='create_post'),
       path('categorie/<int:pk>/', show_category, name = 'show_category'),
-
-
 ]

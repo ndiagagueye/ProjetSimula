@@ -114,13 +114,12 @@ th {
             </ul>
             <div class="tab-content">
               <div class="active tab-pane" id="activity">
-              <h4>Logiciels Simula pour Windows </h4>
+              <h4>Logiciels SimulaMaths pour Windows </h4>
                 <div class="post">
                    <table id="tableau" class="table table-striped">
 
 
              <thead>
-              <!-- Listes des etudiants -->
                <tr>
                  <th>Version disponible</th>
                  <th>Date de publication</th>
@@ -162,54 +161,54 @@ th {
                 <!-- /.post -->
               </div>
 
-              <div class="tab-pane" id="timeline">
-                  <h4>Logiciels Simula pour Lunix</h4> 
 
-                <div class="timeline timeline-inverse">
-                      
-                     <table id="tableau" class="table table-striped">
+             <div class="tab-pane" id="timeline">
+                <h4>Logiciels SimulaMaths pour Lunix</h4>
+                <div class="form-horizontal">
+
+                  <table id="tableau" class="table table-striped">
 
 
-                       <thead>
-                       
-                           <tr>
-                             <th>Version disponible</th>
-                             <th>Date de publication</th>
-                             <th>Version</th>
-                             <th>Details</th>
-                           </tr>
+             <thead>
+              <!-- Listes des etudiants -->
+               <tr>
+                 <th>Version disponible</th>
+                 <th>Date de publication</th>
+                 <th>Version</th>
+                 <th>Details</th>
+               </tr>
 
-                       </thead>
-                       <tbody id="tbody">
+             </thead>
+             <tbody id="tbody">
 
-                              {% for logiciel64 in logiciels64l %}
+              {% for logiciel64 in logiciels64l %}
                                <tr>
                                  <td>simula {{logiciel64.version}}</td>
                                  <td>{{logiciel64.date}}</td>
                                  <td>
 
-                                    <a style="margin-right: : 15px;" class="fa fa-download" href="{{MEDIA_URL}}{{logiciel64.logiciel.url }}" 
+                                    <a style="margin-right: : 15px;" class="fa fa-download" href="{{MEDIA_URL}}{{logiciel64.logiciel.url }}"
                                     download="simula_{{logiciel64.version.versionDownload}}_Lunix_64bits.{{logiciel64.extension}}">
                                      64bits</a>
 
-                                    <a style="margin-left: 15px;" class="fa fa-download" 
+                                    <a style="margin-left: 15px;" class="fa fa-download"
                                     {% for logiciel32 in logiciels32l %}
-                                     {% if logiciel64.version.id == logiciel32.version.id %}  href="{{MEDIA_URL}}{{logiciel32.logiciel.url }}" 
+                                     {% if logiciel64.version.id == logiciel32.version.id %}  href="{{MEDIA_URL}}{{logiciel32.logiciel.url }}"
                                       download="simula_{{logiciel32.version.versionDownload}}_Lunix_32bits.{{logiciel32.extension}}"
                                      {% endif %}
                                      {% endfor %} >32bits</a>
                                   </td>
                                  <td>Detail sur {{logiciel64.version.nom}}</td>
                                 </tr>
-                                {%endfor%}    
-                       </tbody>
-                    </table>
+                                {%endfor%}
 
-                </div>
+             </tbody>
+           </table>
               </div>
+            </div>
 
               <div class="tab-pane" id="settings">
-                <h4>Logiciels Sumila pour Mac OS </h4>
+                <h4>Logiciels SimulaMaths pour Mac OS </h4>
                 <div class="form-horizontal">
                   
                   <table id="tableau" class="table table-striped">
@@ -226,9 +225,6 @@ th {
 
              </thead>
              <tbody id="tbody">
-
-
-
 
 
                 {% for logiciel64 in logiciels64m %}

@@ -68,27 +68,17 @@ def logout(request):
 def profile(request):
     professions = ['professeur', 'etudiant', 'eleve', 'enseignant_chercher', 'docteur']
 
-    profile_user = Profile.objects.get(user__id=request.user.id)
-    user_profile = False
-    if len(profile_user.name) > 0 and len(profile_user.profession) > 0:
-        user_profile = True
 
     if request.POST:
+        error = True
         profession = request.POST['profession']
         full_name = request.POST['name']
 
         if profession in professions:
             error = False
             profile = Profile(user=request.user, name= full_name, profession = profession)
-            if user_profile==True:
-                profile_user.user = request.user
-                profile_user.name = full_name
-                profile_user.profession = profession
-                profile_user.save()
 
-            else:
-
-                profile.save()
+            profile.save()
 
             return redirect('/')
 

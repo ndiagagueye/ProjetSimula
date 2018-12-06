@@ -17,13 +17,11 @@ from django.views.generic import CreateView
 from django.views import generic
 from datetime import datetime
 import json
+from django.utils.safestring import mark_safe
 from django.db.models import Q
-
 from django import template
 
 register = template.Library()
-
-
 
 def show_category(request, pk):
     posts = Post.objects.filter(category__id=pk, publish=True)
@@ -51,6 +49,9 @@ def detail_post(request, pk):
     comments = Comment.objects.filter(post__id=pk).order_by('date')
     form = CommentForm(request.POST)
     is_superuser = False
+
+
+    room_name_json = 'post-'+mark_safe(json.dumps(pk))
     if request.user.is_superuser:
         is_superuser = True
 
@@ -63,7 +64,7 @@ def create_post(request):
     if form.is_valid():
         form.instance.user = request.user
         form.save()
-        return redirect('/forum/detail_post')
+        return redirect('/forum')
 
     return render(request, "forum/create_post.html", locals())
 

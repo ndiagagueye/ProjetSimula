@@ -372,7 +372,7 @@ p#copy{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 {% block content %}
-<div id="team" class="text-center">
+<div id="team" class="text-center overlay">
   <div class="container">
  
 
@@ -581,20 +581,7 @@ p#copy{
 									<div class="comment-head content-comm">
 										<h6 class="comment-name {% if post.user == comment.user %} by-author {% endif %} ">{{post.user.username}}</h6>
 										<span>
-
-										{% if nowtime.year > post.date.year  %}
-										 il y'a {{ nowtime.year|sub:post.date.year}} ans
-										{% elif nowtime.mounth > post.date.mounth  %}
-											il y'a {{ nowtime.mounth|sub:post.date.mounth}} mois
-										{% elif nowtime.day > post.date.day %}
-											il y'a {{ nowtime.day |sub:post.date.day}} jours
-										{% elif nowtime.hour > post.date.hour%}
-											il y'a {{ nowtime.hour|sub:post.date.hour}} heures
-										{% elif nowtime.minute > post.date.minute%}
-											il y'a {{ nowtime.minute|sub:post.date.minute}} minutes
-										{% else %}
-											il y'a {{ nowtime.second|sub:post.date.second}} secondes
-										{% endif %}
+										 {{post.date}}
 									    </span>
 
                                         {% if comment.validate == False %}
@@ -612,7 +599,7 @@ p#copy{
 									</div>
 									<div class="comment-content content-comm">
 
-										{{comment.body}}
+										{{comment.body|urlize}}
 									
 									</div>
 								</div>
@@ -699,5 +686,55 @@ p#copy{
 
 </script>
 <script type="text/javascript" src="{% static "js/add_comment.js" %}" ></script>
+
+
+
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+
+
+
+
+<script>
+
+    var roomName = '{{ room_name_json }}';
+
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/post/' + roomName + '/');
+
+    chatSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        var message = data['message'];
+        $("#new-comment").append(
+                    "<li><div class='comment-avatar'><img src='http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg' alt=''></div><div class='comment-box'>"
+                                    + "<div class='comment-head content-comm'><h6 class='comment-name by-author'><a href=''>{{user.username}}</a></h6>"
+                                      +"<span> {% now 'j F Y H:i' %}</span><i class='fa fa-check' style='font-size: 2em; color: #00a65a'></i></div><div class='comment-content content-comm'>"
+                                      +message+
+                                   " </div></div></li>")
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#comment-text').focus();
+    document.querySelector('#comment-text').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#comment-message-submit').click();
+        }
+    };
+
+    document.querySelector('#comment-message-submit').onclick = function(e) {
+    	console.log('Cliked btn submit')
+        var messageInputDom = document.querySelector('#comment-text');
+        var message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'infos':'{{post.id}}?{{user.id}}?000000000000',
+        }));
+    };
+
+
+</script>
 
 {% endblock%}

@@ -76,14 +76,10 @@
   <form method = "post" action = "">
     {% csrf_token %}
 
-    {% if user_profile == True %}
-       <input id="name" name="name" value="{{ profile_user.name }}" placeholder="Nom complet" required = "required"><br>
 
-    {% else %}
 
       <input id="name" name="name" placeholder="Nom complet" required = "required"><br>
 
-    {% endif %}
       <div class="sel sel--black-panther">
       <select name="profession" id="select-profession">
         <option value="Profession" disabled >Profession</option>

@@ -1,8 +1,7 @@
-
-{% extends "sim/telechargement.html" %}
+{% extends "sim/galerie.html" %}
 
 {% block titre %}
-<title>à propos</title>
+<title>Ajouter un exercice corrigé</title>
 
 {% endblock %}
 
@@ -10,30 +9,80 @@
 {% block page %}
 
 {% load static %}
+  <script src="{% static "css/prettify.css" %}"></script>
+
+<style type="text/css">
+ @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro);
+
+    .section-title {
+    font-family: "Raleway",sans-serif;
+    font-size: 50px;
+    font-weight: 100;
+    text-align: center;
+}
+.section-title {
+    padding: 0 ;
+}
+
+/****** CSS Partage de code sources ****/
+#main-content-share-code {
+  background-color: #000;
+  padding-top: 1em;
+  padding-left: 8px;
+  position: relative;
+}
+#code{
+  font-family:  "Source Code Pro", sans-serif;
+  width: 100%;
+  min-height: 400px;
+  border: none;
+  outline: 0;
+  background-color: #000;
+  color: #c5c5c5;
+  resize: none;
+  font-size: 14px;
+  overflow: hidden;
+}
+.nav-code{
+  position: absolute;
+  right: 10px;
+    top: 10px;
+}#main-content{
+
+ }
+
+/***** fin CSS Partage de code sources
+</style>
+<div id="team" class="text-center">
   <div class="container">
-
-            
-          <div class="col-md-3">
-          <div class="box box-default box-solid collapsed-box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Expandable</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                </button>
-              </div>
-              <!-- /.box-tools -->
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body" style="display: none;">
-              The body of the box
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
+    <center style=" margin-top: 200px; margin-bottom: 650px;">
 
 
-    
-  </div>
+       <div id="main-content" >
+         <div id="main-content-share-code">
+           <form action="" autocomplete="off" method="post">
+                <textarea name="code" id="code" required="required"
+                      placeholder="Entrer votre code ici"></textarea>
+                <div class="btn-group nav-code">
+                   <a href=""
+                   class="btn btn-warning"><i class="fa fa-save"></i> Enregistrer</a>
+
+                </div>
+
+           </form>
+         </div>
+       </div>
+        </center>
+</div>
+
+</div>
+
+ <script src="{% static "js/tabby.min.js" %}"></script>
+ <script src="{% static "js/prettify.js" %}"></script>
+    <script>
+      prettyPrint();
+    </script>
+
+
+
 {% endblock %}

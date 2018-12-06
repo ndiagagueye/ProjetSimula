@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+                <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Title</title>
+                        <link rel="stylesheet" href="https://cdn.payexpresse.com/v1/payexpresse.min.css">
+                        <script
+                                src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                                integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+                                crossorigin="anonymous"></script>
+                        <script src="https://cdn.payexpresse.com/v1/payexpresse.min.js"></script>
+                    </head>
+                    <body>
+
+                        <button class="buy" onclick="buy(this)" data-item-id="88" >Acheter iphone (450000 XOF)
+                        </button>
+
+                        <script>
+
+
+                            function buy(btn) {
+                                var selector = $(btn);
+
+                                (new PayExpresse({
+                                    item_id          :   selector.attr('data-item-id'),
+                                })).withOption({
+                                    requestTokenUrl           :   '<?= BASE_URL ?>/paiement.php',
+                                    method              :   'POST',
+                                    headers             :   {
+                                        "Accept"          :    "text/html"
+                                    },
+                                    prensentationMode   :   PayExpresse.OPEN_IN_POPUP,
+                                    didPopupClosed: function (is_completed, success_url, cancel_url) {
+                                        window.location.href = is_completed === true ? success_url  : cancel_url;
+                                    },
+                                    willGetToken        :   function () {
+                                        console.log("Je me prepare a obtenir un token");
+                                        selector.prop('disabled', true);
+                                    },
+                                    didGetToken         : function (token, redirectUrl) {
+                                        console.log("Mon token est : " +  token  + ' et url est ' + redirectUrl );
+                                        selector.prop('disabled', false);
+                                    },
+                                    didReceiveError: function (error) {
+                                        alert('erreur inconnu', error.toString());
+                                        selector.prop('disabled', false);
+                                    },
+                                    didReceiveNonSuccessResponse: function (jsonResponse) {
+                                        console.log('non success response ',jsonResponse);
+                                        alert(jsonResponse.errors);
+                                        selector.prop('disabled', false);
+                                    }
+                                }).send();
+
+                                //.send params are optional
+                            }
+                        </script>
+                    </body>
+                 </html>

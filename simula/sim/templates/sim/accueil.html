@@ -308,7 +308,7 @@
        <li><a href="{% url "documentation_simula" %}">Documentation </a></li>
        <li><a href="{% url "apropos" %}">A propos </a></li>
        <li><a href="{% url "exercices_corrige" %}">Exercices corrigés</a></li>
-       <li><a href="{% url "forum" %}">Forum</a></li>
+       <li><a href="{% url "forum:home" %}">Forum</a></li>
        <li><a href="{% url "communaute" %}">Communauté</a></li>
        <li><a href="{% url "galerie" %}">Galeries</a></li>
        <li><a href="{% url "contact" %}">Contact</a></li>
@@ -320,20 +320,25 @@
            <a data-toggle="dropdown" role="buton" href="#">
            
                 
-                <span style="color: white;" class="glyphicon glyphicon-user"></span>
+            <span style="color: white;" class="glyphicon glyphicon-user"></span>
             </a>
             <ul class="dropdown-menu">
 
+              {% if not user.is_authenticated %}
+                   <li><a href="{% url "users:register" %}">Connexion</a></li>
+              {% endif %}
 
-              <li><a href="{% url "users:register" %}">Connexion</a></li>
+              {% if not user.is_authenticated %}
+                  <li class="divider"></li>
+                  <li><a href="{% url "users:login" %}">Incription</a></li>
 
-              <li class="divider"></li>
+              {% endif %}
 
-              <li><a href="{% url "users:login" %}">Incription</a></li>
+               {% if user.is_authenticated %}
+                    <li class="divider"></li>
+                    <li><a href="{% url "users:logout" %}">Déconnexion</a></li>
+              {% endif %}
 
-                 <li class="divider"></li>
-
-              <li><a href="{% url "users:logout" %}">Déconnexion</a></li>
             </ul>
 
         </li>
@@ -529,7 +534,7 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Navigation</h2>
                         <ul>
-                            <li><a href="{% url "forum" %}">Forum</a></li>
+                            <li><a href="{% url "forum:home" %}">Forum</a></li>
                             <li><a href="{% url "communaute" %}">Communauté</a></li>
                             <li><a href="{% url "galerie" %}">Galeries</a></li>
                             <li><a href="{% url "contact" %}">Contact</a></li>

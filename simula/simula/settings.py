@@ -82,7 +82,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'simula.wsgi.application'
-ASGI_APPLICATION = "simula.routing.application"
+ASGI_APPLICATION = 'simula.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 
 # Database
@@ -92,9 +101,9 @@ ASGI_APPLICATION = "simula.routing.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'simula_maths',
-        'USER': 'sumi',
-        'PASSWORD': 'simu',
+        'NAME': 'simulamaths',
+        'USER': 'ndiaga',
+        'PASSWORD': 'gueye',
         'HOST': 'localhost',
         'PORT': '',
     }

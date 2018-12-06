@@ -8,6 +8,7 @@ from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.core.mail import send_mail
 from django.core.mail import BadHeaderError, EmailMessage
+import hashlib
 
 # Create your views here.
 from simula import settings
@@ -118,6 +119,7 @@ def donate(request):
 
 
 def donate_card(request):
+
     return render(request, "sim/donate_card.html", locals())
 
 
@@ -145,3 +147,16 @@ def handler500(request):
 def error_404_view(request, exception):
     data = {"name": "ThePythonDjango.com"}
     return render(request,'error/404.html', data)
+
+
+def ipn(request):
+    if request.method == "POST":
+        inputtxt = request.POST['getrow']
+        api_key_sha256 = request.POST['api_key_sha256'];
+        api_secret_sha256 = request.POST['api_secret_sha256']
+        my_api_secret_sha256 = hashlib.sha256(b'here my api secret').hexdigest()
+        my_api_key_sha256 = hashlib.sha256(b'here my api key').hexdigest()
+    if my_api_key_sha256 == api_key_sha256 and my_api_secret_sha256 == api_secret_sha256:
+       #from payexpress
+
+        return HttpResponse()

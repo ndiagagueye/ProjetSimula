@@ -101,17 +101,19 @@
 
                                     <div class="">
                                         {% if user.is_authenticated %}
-                                            <a href=""></a>
-                                            <button class="categories-btn">
-                                                <a class="href" href="{% url 'forum:create_post' %}"> Publier un article</a>
-                                            </button>
-
+                                            <a style="color: #fff" href="{% url 'forum:create_post' %}">
+                                             <button class="categories-btn">
+                                                Poser une question
+                                             </button>
+                                            </a>
                                          {% endif %}
 
                                         {% if not user.is_authenticated %}
-                                            <button class="categories-btn">
-                                                <a class="href" href="{% url 'forum:create_post' %}">Se connecter</a>
-                                            </button>
+                                            <a style="color: #fff" href="{% url 'forum:create_post' %}">
+                                             <button class="categories-btn">
+                                                Poser une question
+                                             </button>
+                                            </a>
                                         {% endif %}
 
                                         {% if not user.is_authenticated  %}
