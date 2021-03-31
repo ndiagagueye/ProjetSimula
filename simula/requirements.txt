@@ -15,7 +15,7 @@ django-six==1.0.4
 django-spirit==0.6.1
 django-storages==1.7.1
 idna==2.7
-lxml==4.2.5
+lxml==4.6.3
 microurl==0.1.1
 mistune==0.7.4
 oauthlib==2.1.0
