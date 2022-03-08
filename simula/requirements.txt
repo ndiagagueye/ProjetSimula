@@ -12,7 +12,7 @@ django-ses-gateway==0.1.1
 django-simple-forum==0.0.7
 django-simple-pagination==1.1.8
 django-six==1.0.4
-django-spirit==0.6.1
+django-spirit==0.12.3
 django-storages==1.7.1
 idna==2.7
 lxml==4.2.5
